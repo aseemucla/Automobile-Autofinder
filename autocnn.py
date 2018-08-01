@@ -1,9 +1,14 @@
 import numpy as np
 from keras.utils import to_categorical
 import matplotlib.pyplot as plt
-from keras.datasets import fashion_mnist
-(train_X,train_Y), (test_X,test_Y) = fashion_mnist.load_data()
-#%matplotlib inline
+#from keras.datasets import fashion_mnist
+import imagetoarr
+
+overalllist = imagetoarr.getimagearr()
+train_X = overalllist[0]
+train_Y = overalllist[1]
+test_X = overalllist[2]
+test_Y = overalllist[3]
 
 print('Training data shape : ', train_X.shape, train_Y.shape)
 
@@ -30,8 +35,8 @@ plt.title("Ground Truth : {}".format(test_Y[0]))
 
 #plt.show()
 
-train_X = train_X.reshape(-1, 28,28, 1)
-test_X = test_X.reshape(-1, 28,28, 1)
+train_X = train_X.reshape(-1, 1024,786, 1)
+test_X = test_X.reshape(-1, 1024,786, 1)
 
 train_X = train_X.astype('float32')
 test_X = test_X.astype('float32')
@@ -142,7 +147,7 @@ predicted_classes = np.argmax(np.round(predicted_classes),axis=1)
 predicted_classes.shape, test_Y.shape
 
 correct = np.where(predicted_classes==test_Y)[0]
-print "Found %d correct labels" + len(correct)
+#print "Found %d correct labels" + len(correct)
 for i, correct in enumerate(correct[:9]):
     plt.subplot(3,3,i+1)
     plt.imshow(test_X[correct].reshape(28,28), cmap='gray', interpolation='none')
@@ -150,7 +155,7 @@ for i, correct in enumerate(correct[:9]):
     plt.tight_layout()
 
 incorrect = np.where(predicted_classes!=test_Y)[0]
-print "Found %d incorrect labels" + len(incorrect)
+#print "Found %d incorrect labels" + len(incorrect)
 for i, incorrect in enumerate(incorrect[:9]):
     plt.subplot(3,3,i+1)
     plt.imshow(test_X[incorrect].reshape(28,28), cmap='gray', interpolation='none')
