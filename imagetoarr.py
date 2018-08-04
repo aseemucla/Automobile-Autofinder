@@ -84,7 +84,7 @@ def getimagearr():
 		value_list = json.load(infile)
 		print("shape of value_list:")
 		print(np.array(value_list).shape)
-		overalllist.append(np.array(image_list))
+		overalllist.append(np.array(value_list))
 	with open("imagestest.txt", "r") as infile:
 		image_list_test = json.load(infile)
 		print("shape of image_list_test:")

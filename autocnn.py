@@ -1,8 +1,57 @@
 import numpy as np
 from keras.utils import to_categorical
 import matplotlib.pyplot as plt
-#from keras.datasets import fashion_mnist
+from keras.datasets import fashion_mnist
 import imagetoarr
+
+#For Google Colab
+
+# from google.colab import auth
+# auth.authenticate_user()
+# from googleapiclient.discovery import build
+# drive_service = build('drive', 'v3')
+
+# file_id = 'target_file_id'
+
+# import io
+# from googleapiclient.http import MediaIoBaseDownload
+
+# request = drive_service.files().get_media(fileId=file_id)
+# downloaded = io.BytesIO()
+# downloader = MediaIoBaseDownload(downloaded, request)
+# done = False
+# while done is False:
+#   # _ is a placeholder for a progress object that we ignore.
+#   # (Our file is small, so we skip reporting progress.)
+#   _, done = downloader.next_chunk()
+
+# downloaded.seek(0)
+# print('Downloaded file contents are: {}'.format(downloaded.read()))
+
+
+
+
+# overalllist = []
+# with open("images.txt", "r") as infile:
+# 	image_list = json.load(infile)
+# 	print("shape of image_list:")
+# 	print(np.array(image_list).shape)
+# 	overalllist.append(np.array(image_list))
+# with open("types.txt", "r") as infile:
+# 	value_list = json.load(infile)
+# 	print("shape of value_list:")
+# 	print(np.array(value_list).shape)
+# 	overalllist.append(np.array(image_list))
+# with open("imagestest.txt", "r") as infile:
+# 	image_list_test = json.load(infile)
+# 	print("shape of image_list_test:")
+# 	print(np.array(image_list_test).shape)
+# 	overalllist.append(np.array(image_list_test))
+# with open("typestest.txt", "r") as infile:
+# 	value_list_test = json.load(infile)
+# 	print("shape of value_list_test:")
+# 	print(np.array(value_list_test).shape)
+# 	overalllist.append(np.array(value_list_test))
 
 overalllist = imagetoarr.getimagearr()
 train_X = overalllist[0]
@@ -63,32 +112,32 @@ from keras.layers.advanced_activations import LeakyReLU
 
 batch_size = 64
 epochs = 20
-num_classes = 10
+num_classes = 3
 
 
 # no dropout
 
-# fashion_model = Sequential()
-# fashion_model.add(Conv2D(32, kernel_size=(3, 3),activation='linear',input_shape=(28,28,1),padding='same'))
-# fashion_model.add(LeakyReLU(alpha=0.1))
-# fashion_model.add(MaxPooling2D((2, 2),padding='same'))
-# fashion_model.add(Conv2D(64, (3, 3), activation='linear',padding='same'))
-# fashion_model.add(LeakyReLU(alpha=0.1))
-# fashion_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
-# fashion_model.add(Conv2D(128, (3, 3), activation='linear',padding='same'))
-# fashion_model.add(LeakyReLU(alpha=0.1))                  
-# fashion_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
-# fashion_model.add(Flatten())
-# fashion_model.add(Dense(128, activation='linear'))
-# fashion_model.add(LeakyReLU(alpha=0.1))                  
-# fashion_model.add(Dense(num_classes, activation='softmax'))
-# fashion_model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adam(),metrics=['accuracy'])
+# car_model = Sequential()
+# car_model.add(Conv2D(32, kernel_size=(3, 3),activation='linear',input_shape=(28,28,1),padding='same'))
+# car_model.add(LeakyReLU(alpha=0.1))
+# car_model.add(MaxPooling2D((2, 2),padding='same'))
+# car_model.add(Conv2D(64, (3, 3), activation='linear',padding='same'))
+# car_model.add(LeakyReLU(alpha=0.1))
+# car_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
+# car_model.add(Conv2D(128, (3, 3), activation='linear',padding='same'))
+# car_model.add(LeakyReLU(alpha=0.1))                  
+# car_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
+# car_model.add(Flatten())
+# car_model.add(Dense(128, activation='linear'))
+# car_model.add(LeakyReLU(alpha=0.1))                  
+# car_model.add(Dense(num_classes, activation='softmax'))
+# car_model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adam(),metrics=['accuracy'])
 
-# fashion_model.summary()
+# car_model.summary()
 
-# fashion_train = fashion_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
+# fashion_train = car_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
 
-# test_eval = fashion_model.evaluate(test_X, test_Y_one_hot, verbose=0)
+# test_eval = car_model.evaluate(test_X, test_Y_one_hot, verbose=0)
 # print('Test loss:', test_eval[0])
 # print('Test accuracy:', test_eval[1])
 
@@ -96,32 +145,32 @@ num_classes = 10
 
 # with dropout
 
-fashion_model = Sequential()
-fashion_model.add(Conv2D(32, kernel_size=(3, 3),activation='linear',padding='same',input_shape=(28,28,1)))
-fashion_model.add(LeakyReLU(alpha=0.1))
-fashion_model.add(MaxPooling2D((2, 2),padding='same'))
-fashion_model.add(Dropout(0.25))
-fashion_model.add(Conv2D(64, (3, 3), activation='linear',padding='same'))
-fashion_model.add(LeakyReLU(alpha=0.1))
-fashion_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
-fashion_model.add(Dropout(0.25))
-fashion_model.add(Conv2D(128, (3, 3), activation='linear',padding='same'))
-fashion_model.add(LeakyReLU(alpha=0.1))                  
-fashion_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
-fashion_model.add(Dropout(0.4))
-fashion_model.add(Flatten())
-fashion_model.add(Dense(128, activation='linear'))
-fashion_model.add(LeakyReLU(alpha=0.1))           
-fashion_model.add(Dropout(0.3))
-fashion_model.add(Dense(num_classes, activation='softmax'))
-fashion_model.summary()
+car_model = Sequential()
+car_model.add(Conv2D(32, kernel_size=(3, 3),activation='linear',padding='same',input_shape=(1024,786,1)))
+car_model.add(LeakyReLU(alpha=0.1))
+car_model.add(MaxPooling2D((2, 2),padding='same'))
+car_model.add(Dropout(0.25))
+car_model.add(Conv2D(64, (3, 3), activation='linear',padding='same'))
+car_model.add(LeakyReLU(alpha=0.1))
+car_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
+car_model.add(Dropout(0.25))
+car_model.add(Conv2D(128, (3, 3), activation='linear',padding='same'))
+car_model.add(LeakyReLU(alpha=0.1))                  
+car_model.add(MaxPooling2D(pool_size=(2, 2),padding='same'))
+car_model.add(Dropout(0.4))
+car_model.add(Flatten())
+car_model.add(Dense(128, activation='linear'))
+car_model.add(LeakyReLU(alpha=0.1))           
+car_model.add(Dropout(0.3))
+car_model.add(Dense(num_classes, activation='softmax'))
+car_model.summary()
 
-fashion_model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adam(),metrics=['accuracy'])
-fashion_train_dropout = fashion_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
+car_model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adam(),metrics=['accuracy'])
+fashion_train_dropout = car_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
 
-fashion_model.save("fashion_model_dropout.h5py")
+car_model.save("car_model_dropout.h5py")
 
-test_eval = fashion_model.evaluate(test_X, test_Y_one_hot, verbose=1)
+test_eval = car_model.evaluate(test_X, test_Y_one_hot, verbose=1)
 print('Test loss:', test_eval[0])
 print('Test accuracy:', test_eval[1])
 
@@ -141,7 +190,7 @@ plt.title('Training and validation loss')
 plt.legend()
 plt.show()
 
-predicted_classes = fashion_model.predict(test_X)
+predicted_classes = car_model.predict(test_X)
 
 predicted_classes = np.argmax(np.round(predicted_classes),axis=1)
 predicted_classes.shape, test_Y.shape
@@ -150,7 +199,7 @@ correct = np.where(predicted_classes==test_Y)[0]
 #print "Found %d correct labels" + len(correct)
 for i, correct in enumerate(correct[:9]):
     plt.subplot(3,3,i+1)
-    plt.imshow(test_X[correct].reshape(28,28), cmap='gray', interpolation='none')
+    plt.imshow(test_X[correct].reshape(1024,786), cmap='gray', interpolation='none')
     plt.title("Predicted {}, Class {}".format(predicted_classes[correct], test_Y[correct]))
     plt.tight_layout()
 
@@ -158,7 +207,7 @@ incorrect = np.where(predicted_classes!=test_Y)[0]
 #print "Found %d incorrect labels" + len(incorrect)
 for i, incorrect in enumerate(incorrect[:9]):
     plt.subplot(3,3,i+1)
-    plt.imshow(test_X[incorrect].reshape(28,28), cmap='gray', interpolation='none')
+    plt.imshow(test_X[incorrect].reshape(1024,786), cmap='gray', interpolation='none')
     plt.title("Predicted {}, Class {}".format(predicted_classes[incorrect], test_Y[incorrect]))
     plt.tight_layout()
 
