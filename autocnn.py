@@ -84,8 +84,8 @@ plt.title("Ground Truth : {}".format(test_Y[0]))
 
 #plt.show()
 
-train_X = train_X.reshape(-1, 1024,786, 1)
-test_X = test_X.reshape(-1, 1024,786, 1)
+train_X = train_X.reshape(-1, 512,393, 1)
+test_X = test_X.reshape(-1, 512,393, 1)
 
 train_X = train_X.astype('float32')
 test_X = test_X.astype('float32')
@@ -142,11 +142,11 @@ num_classes = 3
 # print('Test accuracy:', test_eval[1])
 
 
-
+#512 x 393
 # with dropout
 
 car_model = Sequential()
-car_model.add(Conv2D(32, kernel_size=(3, 3),activation='linear',padding='same',input_shape=(1024,786,1)))
+car_model.add(Conv2D(32, kernel_size=(3, 3),activation='linear',padding='same',input_shape=(512,393,1)))
 car_model.add(LeakyReLU(alpha=0.1))
 car_model.add(MaxPooling2D((10, 10),padding='same'))
 car_model.add(Dropout(0.25))
@@ -195,7 +195,7 @@ correct = np.where(predicted_classes==test_Y)[0]
 #print "Found %d correct labels" + len(correct)
 for i, correct in enumerate(correct[:9]):
     plt.subplot(3,3,i+1)
-    plt.imshow(test_X[correct].reshape(1024,786), cmap='gray', interpolation='none')
+    plt.imshow(test_X[correct].reshape(512,393), cmap='gray', interpolation='none')
     plt.title("Predicted {}, Class {}".format(predicted_classes[correct], test_Y[correct]))
     plt.tight_layout()
 
@@ -203,7 +203,7 @@ incorrect = np.where(predicted_classes!=test_Y)[0]
 #print "Found %d incorrect labels" + len(incorrect)
 for i, incorrect in enumerate(incorrect[:9]):
     plt.subplot(3,3,i+1)
-    plt.imshow(test_X[incorrect].reshape(1024,786), cmap='gray', interpolation='none')
+    plt.imshow(test_X[incorrect].reshape(512,393), cmap='gray', interpolation='none')
     plt.title("Predicted {}, Class {}".format(predicted_classes[incorrect], test_Y[incorrect]))
     plt.tight_layout()
 
